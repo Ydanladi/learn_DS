@@ -9,7 +9,7 @@ headers={
 
 data=requests.get(url,headers=headers)
 
-print(data.status_code)
+#print(data.status_code)
 
 
 soup=BeautifulSoup(data.text, 'html.parser')
@@ -43,4 +43,4 @@ for row in table_row:
 #create a dataframe
 df=pd.DataFrame(data)
 
-print(df['Date'])
+print(df[0])
