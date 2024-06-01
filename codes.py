@@ -9,15 +9,48 @@ headers={
 
 data=requests.get(url,headers=headers)
 
-#print(data.status_code)
-
-
+print(data.status_code)
 soup=BeautifulSoup(data.text, 'html.parser')
-
 # get table tag from html data
 table=soup.find('table',class_="freeze-column-w-1 w-full overflow-x-auto text-xs leading-4")
 
-table_row=table.find_all('tr')
+# trying to pull th from the table
+table_head=table.find_all('th')
+#looping through the head
+
+table_title=[title.text for title in table_head]
+
+df=pd.DataFrame(columns=table_title)
+# getting data to fil in
+column_data=table.find_all('tr')
+
+for row in column_data[1:]:
+    row_data=row.find_all('td')
+    individual_data=[data.text for data in row_data]
+
+    #print(individual_data)
+    lenght=len(df)
+    df.loc[lenght]=individual_data
+
+print(df['Price'])
+
+
+
+#looping through the text
+# data=[]
+# for row in table_row:
+#     row_data=[]
+#     for cell in row:
+#         row_data.append(cell.text)
+#     data.append(row_data)
+# #create a dataframe
+# df=pd.DataFrame(data)
+# table_head= df[0].tolist()
+# df=df[2:]
+
+# df.columns=table_head
+
+# print(df.head())
 
 #df=pd.DataFrame(columns=['Date','Price','Open','High','Low','Vol','Change'])
 # col=row.find_all('td')
@@ -32,15 +65,3 @@ table_row=table.find_all('tr')
 #     print(df.head(5))
 
 #looping throught the data
-
-data=[]
-for row in table_row:
-    row_data=[]
-    for cell in row:
-        row_data.append(cell.text)
-    data.append(row_data)
-
-#create a dataframe
-df=pd.DataFrame(data)
-
-print(df[0])

@@ -10,8 +10,6 @@ headers={
 data=requests.get(url,headers=headers)
 
 print(data.status_code)
-
-
 soup=BeautifulSoup(data.text, 'html.parser')
 
 # get table tag from html data
@@ -34,5 +32,5 @@ df.to_csv('try_data', index=False)
 print(df)
 
 
-#looping throught the data
+
 
